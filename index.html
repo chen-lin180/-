@@ -1,67 +1,28 @@
-def print_board(board):
-    for row in board:
-        print(" | ".join(row))
-        print("-" * 5)
-
-def check_win(board, player):
-    # 檢查行
-    for row in board:
-        if all(s == player for s in row):
-            return True
-    # 檢查列
-    for col in range(3):
-        if all(board[row][col] == player for row in range(3)):
-            return True
-    # 檢查對角線
-    if all(board[i][i] == player for i in range(3)):
-        return True
-    if all(board[i][2 - i] == player for i in range(3)):
-        return True
-    return False
-
-def check_draw(board):
-    return all(board[i][j] != ' ' for i in range(3) for j in range(3))
-
-def tic_tac_toe():
-    board = [[' ' for _ in range(3)] for _ in range(3)]
-    current_player = 'X'
-    
-    while True:
-        print_board(board)
-        print(f"玩家 {current_player} 的回合")
-        
-        # 玩家輸入行和列
-        try:
-            row, col = map(int, input("請輸入行和列 (例如 1 1): ").split())
-            row, col = row - 1, col - 1  # 转换为 0 索引
-        except ValueError:
-            print("無效的輸入，請再次輸入。")
-            continue
-        
-        if not (0 <= row < 3 and 0 <= col < 3):
-            print("無效的座標，請重新選擇。")
-            continue
-        if board[row][col] != ' ':
-            print("該位置已經被佔用，請選擇其他位置。")
-            continue
-        
-        # 在棋盤上標記
-        board[row][col] = current_player
-        
-        # 檢查是否有玩家勝利
-        if check_win(board, current_player):
-            print_board(board)
-            print(f"玩家 {current_player} 勝利了！")
-            break
-        
-        # 檢查是否平局
-        if check_draw(board):
-            print_board(board)
-            print("平局！")
-            break
-        
-        # 換玩家
-        current_player = 'O' if current_player == 'X' else 'X'
-
-# 開始遊戲
-tic_tac_toe()
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>井字遊戲</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>井字遊戲</h1>
+        <div class="board" id="board">
+            <div class="cell" data-cell-index="0"></div>
+            <div class="cell" data-cell-index="1"></div>
+            <div class="cell" data-cell-index="2"></div>
+            <div class="cell" data-cell-index="3"></div>
+            <div class="cell" data-cell-index="4"></div>
+            <div class="cell" data-cell-index="5"></div>
+            <div class="cell" data-cell-index="6"></div>
+            <div class="cell" data-cell-index="7"></div>
+            <div class="cell" data-cell-index="8"></div>
+        </div>
+        <div class="status" id="status">玩家 X 的回合</div>
+        <button id="reset" class="reset-btn">重新開始</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
